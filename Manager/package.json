@@ -1,0 +1,51 @@
+{
+  "name": "thesis-manager",
+  "version": "0.0.1",
+  "private": true,
+  "description": "IN5000 Thesis project 2018-2020 | Configuration manager module",
+  "author": "M. Dunnewind",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.12",
+    "@vitejs/plugin-react": "^3.1.0",
+    "clsx": "^1.1.1",
+    "hoist-non-react-statics": "^3.3.2",
+    "isomorphic-fetch": "^3.0.0",
+    "moment": "^2.26.0",
+    "normalizr": "^3.6.0",
+    "prop-types": "^15.7.2",
+    "ramda": "^0.28.0",
+    "react": "^18.2.0",
+    "react-d3-speedometer": "^1.1.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.8.2",
+    "recharts": "^2.4.3",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "socket.io-client": "^2.3.0",
+    "vite": "^4.1.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ],
+    "rules": {
+      "no-unused-expressions": "off"
+    }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
