@@ -1,0 +1,148 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "This is the config root",
+  "properties": {
+    "application": {
+      "$ref": "#/definitions/ApplicationSpec"
+    },
+    "sources": {
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/SourceItemSpec"
+          }
+        ]
+      }
+    },
+    "layers": {
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/LayersItemSpec"
+          }
+        ]
+      }
+    },
+    "filters": {
+      "$ref": "#/definitions/FiltersSpec"
+    }
+  },
+  "required": [
+    "application",
+    "sources",
+    "layers",
+    "filters"
+  ],
+  "definitions": {
+    "ApplicationSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "verbose": {
+          "type": "boolean"
+        },
+        "requiredVersion": {
+          "type": "number"
+        },
+        "cleanCacheOnstart": {
+          "type": "boolean"
+        },
+        "collectGraphStats": {
+          "type": "string"
+        }
+      },
+      "required": ["requiredVersion"]
+    },
+    "SourceItemSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "enum": ["shape", "data", "model"]
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "input": {
+          "oneOf": [
+            {
+              "$ref": "src/modules/source/input/SourceInputFile.json"
+            },
+            {
+              "$ref": "src/modules/source/input/SourceInputUrl.json"
+            },
+            {
+              "$ref": "src/modules/source/input/SourceInputSocket.json"
+            }
+          ]
+        },
+        "normalize": {
+          "oneOf": [
+            {
+              "$ref": "src/modules/source/normalize/SourceNormalizeGeojson.json"
+            },
+            {
+              "$ref": "src/modules/source/normalize/SourceNormalizeShapefile.json"
+            },
+            {
+              "$ref": "src/modules/source/normalize/SourceNormalizeJson.json"
+            }
+          ]
+        },
+        "processing": {
+          "type": "array"
+        },
+        "enhancement": {
+          "type": "array"
+        }
+      },
+      "required": ["type", "input", "normalize"]
+    },
+    "LayersItemSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "mark": {
+          "type": "string"
+        },
+        "source": {
+
+        },
+        "encoding": {
+          "properties": {
+            "color": {
+              "oneOf": [
+                {
+                  "$ref": "src/modules/encoding/color/VisualColorSingle.json"
+                },
+                {
+                  "$ref": "src/modules/encoding/color/VisualColorMap.json"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "mark"
+      ]
+    },
+    "FiltersSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "disabled": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

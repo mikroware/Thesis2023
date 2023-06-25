@@ -1,0 +1,103 @@
+{
+  "$schema": "configSchema.json",
+  "application": {
+    "name": "Schema example config",
+    "verbose": true,
+    "requiredVersion": 1
+  },
+  "sources": [
+    {
+      "type": "shape",
+      "input": {
+        "type": "url",
+        "url": "http://test.nl/"
+      },
+      "normalize": {
+        "type": "shapefile"
+      },
+      "processing": [
+        {
+          "script": "$buildIn.simplify"
+        }
+      ],
+      "enhancement": [
+        {
+          "name": "area",
+          "type": "shapeArea"
+        },
+        {
+          "name": "extra",
+          "type": "sourceLink",
+          "dependsOnSource": 1,
+          "field": "$shapeProperties.ID",
+          "foreignField": "$field.SHAPE_ID"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "disabled": true,
+      "input": {
+        "type": "file",
+        "filePath": "file://file.json"
+      },
+      "normalize": {
+        "type": "json"
+      }
+    }
+  ],
+  "layers": [
+    {
+      "mark": "map"
+    },
+    {
+      "mark": "shape",
+      "source": 0,
+      "encoding": {
+        "x": {
+          "field": "$shapeX",
+          "conversion": "$triangleToXXX",
+          "offset": "$centerOffset"
+        },
+        "y": {
+          "field": "$shapeY",
+          "conversion": "$triangleToXXX",
+          "offset": "$centerOffset"
+        },
+        "height": {
+          "field": "$shapeProperties.FIELD"
+        },
+        "color": {
+          "type": "map",
+          "colorMap": "cooltowarm",
+          "field": "enhancement.area"
+        },
+        "otherProperty": {
+          "field": "enhancement.extra.someProperty"
+        }
+      }
+    },
+    {
+      "mark": "point",
+      "encoding": {
+        "color": {
+          "type": "single",
+          "singleColor": "#FF0000"
+        },
+        "render": {
+          "type": "sphere",
+          "size": 10
+        }
+      },
+      "editable": {
+        "add": "point",
+        "remove": true,
+        "properties": [
+          "$all",
+          "remark"
+        ]
+      }
+    }
+  ],
+  "filters": []
+}

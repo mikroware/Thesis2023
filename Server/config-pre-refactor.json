@@ -1,0 +1,216 @@
+{
+    "loaded": true,
+    "verbose": true,
+    "application": {
+        "name": "Thesis testing",
+        "verbose": true
+    },
+    "dataSources": [
+        {
+            "file": "testData/gem_2018.shp",
+            "simplifyTolerance": 100,
+            "noDataValue": -99999999,
+            "enabled": false,
+            "cordSystemType": "RD-NL",
+            "visuals": [
+                {
+                    "type": "height",
+                    "visualize": "height",
+                    "from": "P_MAROKKO",
+                    "scale": 10,
+                    "round": true,
+                    "min": 4,
+                    "default": {
+                        "compare": [
+                            "smaller",
+                            4
+                        ],
+                        "value": 4
+                    }
+                },
+                {
+                    "type": "map",
+                    "visualize": "color",
+                    "colorMap": "blue",
+                    "field": "P_GESCHEID",
+                    "range": {
+                        "min": 2,
+                        "max": 12
+                    },
+                    "specialMap": [
+                        {
+                            "value": "JA",
+                            "to": "#B7E9FF",
+                            "from": "WATER"
+                        },
+                        {
+                            "value": -99999999,
+                            "to": "#ff0000"
+                        }
+                    ],
+                    "opacity": 0.5
+                }
+            ],
+            "name": "Gemeentes!"
+        },
+        {
+            "name": "Wijken",
+            "file": "testData/wijk_2018.shp",
+            "simplifyTolerance": 100,
+            "noDataValue": -99999999,
+            "enabled": false,
+            "cordSystemType": "RD-NL",
+            "visuals": [
+                {
+                    "type": "height",
+                    "visualize": "height",
+                    "from": "P_N_W_AL",
+                    "scale": 1.1905,
+                    "round": true,
+                    "min": 2,
+                    "default": {
+                        "compare": [
+                            "smaller",
+                            1
+                        ],
+                        "value": 1
+                    }
+                },
+                {
+                    "type": "single",
+                    "visualize": "color",
+                    "singleColor": "#FF5500",
+                    "specialMap": [
+                        {
+                            "value": -99999999,
+                            "to": "#ff0000"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Walkways TUD",
+            "file": "testData/voetpad_tud.geojson",
+            "simplifyTolerance": 0,
+            "enabled": true,
+            "cordSystemType": "WGS84",
+            "visuals": [
+                {
+                    "type": "map",
+                    "visualize": "color",
+                    "colorMap": "blue",
+                    "hardMap": 0.2,
+                    "field": "avg_width",
+                    "invert": false,
+                    "range": {
+                        "min": 1.5,
+                        "max": 3.4
+                    },
+                    "specialMap": [
+                        {
+                            "value": 0,
+                            "to": "#ff0000"
+                        }
+                    ],
+                    "opacity": 1
+                }
+            ]
+        }
+    ],
+    "sources": [
+        {
+            "name": "Walkways TUD",
+            "type": "shape",
+            "input": {
+                "type": "file",
+                "path": "testData/voetpad_tud.geojson"
+            },
+            "normalize": {
+                "type": "fromGeojson|fromXml|fromShapefile|fromDataToPoint",
+                "inCaseOfFromDataToPointTheLongProperty": "",
+                "inCaseOfFromDataToPointTheLatProperty": ""
+            },
+            "processing": [
+                {
+                    "type": "simplify",
+                    "tolerance": 0.5
+                }
+            ],
+            "enhancement": [
+                {
+                    "type": "area"
+                }
+            ]
+        }
+    ],
+    "layersOldTest": [
+        {
+            "enabled": false,
+            "name": "Test",
+            "data": {
+                "file": "some_file.shp/geojson",
+                "shapeSimplifyTolerance": 100,
+                "cordSystemType": "RD-NL"
+            },
+            "mark": {
+                "type": "geoshape-extruded"
+            },
+            "encoding": {
+                "height": {
+                    "field": "P_MAROKKO"
+                },
+                "color": {
+                    "field": "P_MAROKKO",
+                    "opacity": 0.5
+                }
+            }
+        }
+    ],
+    "cordSystem": {
+        "type": "RD-NL",
+        "centerX": 142600,
+        "centerY": 452000,
+        "scale": 1
+    },
+    "filters": [
+        {
+            "sourceIndex": 2,
+            "field": "avg_width",
+            "range": [
+                1,
+                14
+            ]
+        }
+    ],
+    "layers": [
+        {
+            "name": "Colored sidewalks",
+            "mark": "shape",
+            "source": 2,
+            "encoding": {
+                "x": {
+                    "field": "$shapeX",
+                    "conversion": "$triangleToXXX",
+                    "offset": "$centerOffset"
+                },
+                "y": {
+                    "field": "$shapeY",
+                    "conversion": "$triangleToXXX",
+                    "offset": "$centerOffset"
+                },
+                "height": {
+                    "field": "$shapeProperties.FIELD"
+                },
+                "color": {
+                    "type": "map",
+                    "colorMap": "cooltowarm",
+                    "field": "$shapeProperties.avg_width"
+                },
+                "otherProperty": {
+                    "field": "enhancement.extra.someProperty"
+                }
+            }
+        }
+    ]
+}

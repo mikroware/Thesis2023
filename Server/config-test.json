@@ -1,0 +1,27 @@
+{
+  "verbose": true,
+  "dataSources": [
+    {
+      "file": "shapeFiles/gem_2018.shp",
+      "simplifyTolerance": 100,
+      "noDataValue": -99999999,
+      "enabled": true,
+      "visuals": [
+        {
+          "type": "height", "visualize": "height",
+          "from": "AANT_INW", "scale": 0.0003, "round": true, "min": 2,
+          "default": { "compare": ["smaller", 1], "value": 1 }
+        },
+        {
+          "type": "color", "visualize": "color",
+          "colorMap": "blue", "field": "P_GESCHEID",
+          "range": {"min": 2, "max": 12},
+          "specialMap": [
+            {"value": "JA", "to": "#B7E9FF", "from": "WATER"},
+            {"value": -99999999, "to": "#ff0000"}
+          ]
+        }
+      ]
+    }
+  ]
+}

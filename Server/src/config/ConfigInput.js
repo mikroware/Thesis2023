@@ -1,0 +1,5 @@
+
+class ConfigInput {
+
+    file = null;
+}
